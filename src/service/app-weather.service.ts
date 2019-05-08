@@ -30,10 +30,11 @@ export class AppWeatherService {
                 if(response.weather &&  response.weather[0] && response.weather[0].icon){
                     weatherIcon = response.weather[0].icon
                 }
-               let modifiedResponse:{main:WeatherApiRes["main"],place:string, icon:string} = {
+               let modifiedResponse:{main:WeatherApiRes["main"],place:string, icon:string, date:string} = {
                     main:response.main,
                     place:response.name,
-                    icon: weatherIcon
+                    icon: weatherIcon,
+                    date:new Date(response.dt*1000+5900000).toLocaleString('en-GB').split(',')[0]
 
                 }
                 return modifiedResponse; // kind of useless

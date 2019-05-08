@@ -16,11 +16,11 @@ export class HomePage {
   }
 
   place:string;
-  cachedSearchs:{main:WeatherApiRes["main"],place:string, icon:string}[]=[];
+  cachedSearchs:{main:WeatherApiRes["main"],place:string, icon:string, date:string}[]=[];
   getWeatherInfo() {
     if(this.place && this.place.length){
     this.appWeatherService.getWeatherInfo(this.place.trim()).subscribe(
-      (data:{main:WeatherApiRes["main"],place:string, icon:string}) =>{
+      (data:{main:WeatherApiRes["main"],place:string, icon:string, date:string}) =>{
         this.presentModal(data);
         this.addAndRestrictCachetoTen(data);
       },
@@ -36,7 +36,7 @@ export class HomePage {
   clear(){
     this.place = '';
   }
-  async presentModal(cachedSearch:{main:WeatherApiRes["main"],place:string, icon:string}) {
+  async presentModal(cachedSearch:{main:WeatherApiRes["main"],place:string, icon:string, date:string}) {
     console.log(cachedSearch)
     const modal = await this.modalCtrl.create(
      DetailPage,{ details: cachedSearch }
@@ -44,7 +44,7 @@ export class HomePage {
   
     return await modal.present();
   }
-  addAndRestrictCachetoTen(newSearchResult:{main:WeatherApiRes["main"],place:string, icon:string}){
+  addAndRestrictCachetoTen(newSearchResult:{main:WeatherApiRes["main"],place:string, icon:string, date:string}){
     if(this.cachedSearchs.length === 10){
       this.cachedSearchs.pop();
     } 
